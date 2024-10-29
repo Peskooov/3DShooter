@@ -9,19 +9,17 @@ public class CharacterAnimatorState : MonoBehaviour
     
     private void LateUpdate()
     {
-        Vector3 movementSpeed = targetCharacterController.velocity;
-        
+        Vector3 movementSpeed = transform.InverseTransformDirection(targetCharacterController.velocity); // Change Local to World transform position
         
         targetAnimator.SetFloat("NormalizeMovementX",movementSpeed.x / targetCharacterMovement.GetCurrentSpeed());
         targetAnimator.SetFloat("NormalizeMovementZ",movementSpeed.z / targetCharacterMovement.GetCurrentSpeed());
         
-        targetAnimator.SetBool("IsGround", targetCharacterController.isGrounded);
-        
+        targetAnimator.SetBool("IsGround", targetCharacterMovement.IsGrounded);
         targetAnimator.SetBool("IsCrouch", targetCharacterMovement.IsCrouch);
         targetAnimator.SetBool("IsSprint", targetCharacterMovement.IsSprint);
         targetAnimator.SetBool("IsAiming", targetCharacterMovement.IsAiming);
         
-        if(!targetCharacterController.isGrounded)
+        if(!targetCharacterMovement.IsGrounded)
             targetAnimator.SetFloat("Jump", movementSpeed.y);
         
         Vector3 groundSpeed = targetCharacterController.velocity;

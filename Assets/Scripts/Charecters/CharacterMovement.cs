@@ -39,6 +39,7 @@ public class CharacterMovement : MonoBehaviour
     public bool IsSprint => isSprint;
     public bool IsAiming => isAiming;
     public float DistanceToGround => distanceToGround;
+    public bool IsGrounded => distanceToGround < 0.01f;
     
     private void Start()
     {
@@ -57,7 +58,7 @@ public class CharacterMovement : MonoBehaviour
     {
         directionControl = Vector3.MoveTowards(directionControl, TargetDirectionControl, accelerationRate * Time.deltaTime);
 
-        if (characterController.isGrounded)
+        if (IsGrounded)
         {
             movementDirection = directionControl * GetCurrentSpeedByState();
 
@@ -66,6 +67,8 @@ public class CharacterMovement : MonoBehaviour
                 movementDirection.y = jumpSpeed;
                 isJump = false;
             }
+
+            movementDirection = transform.TransformDirection(movementDirection); // Change World to Local transform position
         }
 
         movementDirection += Physics.gravity * Time.deltaTime;
@@ -75,14 +78,14 @@ public class CharacterMovement : MonoBehaviour
 
     public void Jump()
     {
-        if (characterController.isGrounded == false) return;
+        if (IsGrounded == false) return;
 
         isJump = true;
     }
 
     public void Crouch()
     {
-        if (!characterController.isGrounded || isSprint) return;
+        if (!IsGrounded || isSprint) return;
 
         isCrouch = true;
         characterController.height = crouchHeight;
@@ -98,7 +101,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void Sprint()
     {
-        if (!characterController.isGrounded || isCrouch) return;
+        if (!IsGrounded || isCrouch) return;
 
         isSprint = true;
     }
