@@ -68,7 +68,7 @@ public class CharacterMovement : MonoBehaviour
                 isJump = false;
             }
 
-            movementDirection = transform.TransformDirection(movementDirection); // Change World to Local transform position
+            movementDirection = transform.TransformDirection(movementDirection);  
         }
 
         movementDirection += Physics.gravity * Time.deltaTime;
