@@ -4,7 +4,8 @@ public class CharacterMovementController : MonoBehaviour
 {
     [SerializeField] private CharacterMovement targetCharacterMovement;
     [SerializeField] private ThirdPersonCamera targetCamera;
-
+    [SerializeField] private PlayerShooter targetShooter;
+    
     [SerializeField] private Vector3 aimingOffset;
 
     private void Start()
@@ -24,6 +25,9 @@ public class CharacterMovementController : MonoBehaviour
         else
             targetCamera.IsRotateTarget = false;
 
+        if(Input.GetMouseButton(0))
+            targetShooter.Shoot();
+        
         if (Input.GetButtonDown("Jump"))
             targetCharacterMovement.Jump();
 

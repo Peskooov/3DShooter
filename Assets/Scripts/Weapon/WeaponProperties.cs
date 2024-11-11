@@ -2,7 +2,7 @@ using UnityEngine;
 
 public enum WeaponMode
 {
-    Based,
+    Primary,
     Secondary
 }
 
@@ -20,6 +20,12 @@ public sealed class WeaponProperties : ScriptableObject
 
     [SerializeField] private int energyForUse;
     public int EnergyForUse => energyForUse;
+
+    [SerializeField] private int energyRegenPerSecond;
+    public int EnergyRegenPerSecond => energyRegenPerSecond;
+
+    [SerializeField] private int energyAmountToStartFire;
+    public int EnergyAmountToStartFire => energyAmountToStartFire;
 
     [SerializeField] private AudioClip launchSFX;
     public AudioClip LaunchSFX => launchSFX;
