@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerShooter : MonoBehaviour
 {
     [SerializeField] private CharacterMovement characterMovement;
     [SerializeField] private Camera characterCamera;
     [SerializeField] private Weapon weapon;
+    [SerializeField] private SpreadShootRig spreadShootRig;
     
     [SerializeField] private RectTransform imageSigh ;
 
@@ -22,6 +22,7 @@ public class PlayerShooter : MonoBehaviour
         if (weapon.CanFire)
         {
             weapon.Fire();
+            spreadShootRig.Spread();
         }
     }
 }

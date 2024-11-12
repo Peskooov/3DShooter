@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class Destructible : Entity
     {
@@ -12,6 +13,8 @@ public class Destructible : Entity
         private int currentHitPoints;
         public int HitPoints => currentHitPoints;
 
+        private bool isDeath;
+        
         protected virtual void Start()
         {
             currentHitPoints = hitPoints;
@@ -19,12 +22,15 @@ public class Destructible : Entity
 
         public void ApplyDamage(int damage)
         {
-            if (isIndestructable) return;
+            if (isIndestructable || isDeath) return;
 
             currentHitPoints -= damage;
 
             if (currentHitPoints <= 0)
+            {
                 OnDeath();
+                isDeath = true;
+            }
         }
 
         public void BlockDamage(float blockTime)
@@ -42,7 +48,7 @@ public class Destructible : Entity
         {
             Destroy(gameObject);
 
-            m_EventOnDeath?.Invoke(); // if m_EventOnDeath !=null >> ?
+            EventOnDeath?.Invoke();
         }
 
         private static HashSet<Destructible> allDestructables;
@@ -69,8 +75,7 @@ public class Destructible : Entity
         [SerializeField] private int m_TeamId;
         public int TeamID => m_TeamId;
 
-        [SerializeField] private UnityEvent m_EventOnDeath;
-        public UnityEvent EventOnDeath => m_EventOnDeath;
+        public UnityEvent EventOnDeath;
 
         [SerializeField] private int m_ScoreValue;
         public int ScoreValue => m_ScoreValue;

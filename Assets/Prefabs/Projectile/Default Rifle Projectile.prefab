@@ -46,11 +46,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nickname: 
-  velocity: 100
+  weaponMode: 0
+  velocity: 200
   lifetime: 20
   damage: 10
-  weaponMode: 0
-  targets: []
+  impactEffects:
+  - {fileID: 5493276517205640352, guid: 8fab33e4f1060f44ebdf88a71f2b37ec, type: 3}
+  - {fileID: 9164818043663444873, guid: c5eb37b3ef76319479fc9dda367df969, type: 3}
+  - {fileID: 9164818043663444873, guid: c5eb37b3ef76319479fc9dda367df969, type: 3}
+  - {fileID: 9164818043663444873, guid: c5eb37b3ef76319479fc9dda367df969, type: 3}
 --- !u!1 &7470926817602721278
 GameObject:
   m_ObjectHideFlags: 0

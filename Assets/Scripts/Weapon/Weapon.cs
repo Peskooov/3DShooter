@@ -6,6 +6,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] private WeaponProperties weaponProperties;
     [SerializeField] private float maxPrimaryEnergy;
     [SerializeField] private Transform firePoint;
+
+    [SerializeField] private ParticleSystem muzzleParticleSystem;
+    [SerializeField] private AudioSource audioSource;
     
     public WeaponMode Mode => mode;
     public float MaxPrimaryEnergy => maxPrimaryEnergy;
@@ -16,13 +19,13 @@ public class Weapon : MonoBehaviour
     private float primaryEnergy;
     private bool energyIsRestored;
 
-    //private SpaceShip m_Ship;
+    private Destructible owner;
 
     private void Start()
     {
         primaryEnergy = maxPrimaryEnergy;
 
-        //m_Ship = transform.parent.GetComponent<SpaceShip>();
+        owner = transform.root.GetComponent<Destructible>();
     }
 
     private void Update()
@@ -46,7 +49,7 @@ public class Weapon : MonoBehaviour
     {
         if(energyIsRestored) return;
         if (!CanFire) return;
-        if (weaponProperties == null) return;
+        if (!weaponProperties) return;
         if (refireTimer > 0) return;
         if (TryDrawEnergy(weaponProperties.EnergyForUse) == false) return;
 
@@ -54,18 +57,29 @@ public class Weapon : MonoBehaviour
         projectile.transform.position = firePoint.position;
         projectile.transform.forward = firePoint.forward;
 
-        //projectile.SetParentShooter(m_Ship);
+        projectile.SetParentShooter(owner);
 
         refireTimer = weaponProperties.RateOfFire;
 
         {
-            //SFX
+            muzzleParticleSystem.time = 0;
+            muzzleParticleSystem.Play();
+            
+            audioSource.clip = weaponProperties.LaunchSFX;
+            audioSource.Play();
         }
     }
 
     public void FirePointLookAt(Vector3 pos)
     {
-        firePoint.LookAt(pos);
+        Vector3 offset = Random.insideUnitSphere * weaponProperties.SpreadShootRange;
+
+        if (weaponProperties.SpreadShootDistanceFactor != 0)
+        {
+            offset = offset * Vector3.Distance(firePoint.position, pos) * weaponProperties.SpreadShootDistanceFactor;
+        }
+        
+        firePoint.LookAt(pos + offset);
     }
     
     public void AssignLoadOut(WeaponProperties properties)
@@ -78,10 +92,9 @@ public class Weapon : MonoBehaviour
     
     private bool TryDrawEnergy(int count)
     {
-        if(count == 0)
-        return true;
+        if(count == 0) return true;
 
-        if (primaryEnergy >= 0)
+        if (primaryEnergy >= count)
         {
             primaryEnergy -= count;
             return true;

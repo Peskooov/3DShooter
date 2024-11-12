@@ -27,6 +27,12 @@ public sealed class WeaponProperties : ScriptableObject
     [SerializeField] private int energyAmountToStartFire;
     public int EnergyAmountToStartFire => energyAmountToStartFire;
 
+    [SerializeField] private float spreadShootRange;
+    public float SpreadShootRange =>spreadShootRange;
+    
+    [SerializeField] private float spreadShootDistanceFactor;
+    public float SpreadShootDistanceFactor =>spreadShootDistanceFactor;
+
     [SerializeField] private AudioClip launchSFX;
     public AudioClip LaunchSFX => launchSFX;
 }
