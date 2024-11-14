@@ -22,14 +22,17 @@ public class Projectile : Entity
 
             if (Physics.Raycast(transform.position, transform.forward, out hit, stepLenght))
             {
-                Destructible destructible = hit.collider.transform.root.GetComponent<Destructible>();
-
-                if (destructible && destructible != parent)
+                if (!hit.collider.isTrigger)
                 {
-                    destructible.ApplyDamage(damage);
-                }
+                    Destructible destructible = hit.collider.transform.root.GetComponent<Destructible>();
 
-                OnProjectileLiveEnd(hit.collider, hit.point, hit.normal);
+                    if (destructible && destructible != parent)
+                    {
+                        destructible.ApplyDamage(damage);
+                    }
+
+                    OnProjectileLiveEnd(hit.collider, hit.point, hit.normal);
+                }
             }
 
             timer += Time.deltaTime;

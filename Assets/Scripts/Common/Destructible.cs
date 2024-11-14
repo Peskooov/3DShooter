@@ -33,12 +33,26 @@ public class Destructible : Entity
             }
         }
 
+        public void ApplyHeal(int heal)
+        {
+            currentHitPoints += heal;
+
+            if (currentHitPoints > hitPoints)
+                currentHitPoints = hitPoints;
+        }
+
+        public void HealFull(int heal)
+        {
+            currentHitPoints = hitPoints;
+        }
+
         public void BlockDamage(float blockTime)
         {
             currentHitPoints = hitPoints;
 
             isIndestructable = true;
         }
+        
         public void GetDamage()
         {
             isIndestructable = false;
