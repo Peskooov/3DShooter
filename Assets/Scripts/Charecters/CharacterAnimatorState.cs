@@ -1,33 +1,85 @@
+using System;
 using UnityEngine;
+
+[Serializable]
+public class CharacterAnimatorParametersName
+{
+    public string NormalizeMovementX;
+    public string NormalizeMovementY;
+    public string Sprint;
+    public string Crouch;
+    public string Aiming;
+    public string Ground;
+    public string Jump;
+    public string GroundSpeed;
+    public string DistanceToGround;
+}
+
+[Serializable]
+public class AnimationCrossFadeParameters
+{
+    public string name;
+    public float duration;
+}
 
 public class CharacterAnimatorState : MonoBehaviour
 {
+    [SerializeField] private float inputControlSpeed;
+    
     [SerializeField] private CharacterController targetCharacterController;
     [SerializeField] private CharacterMovement targetCharacterMovement;
     [SerializeField] private Animator targetAnimator;
+    [SerializeField] private CharacterAnimatorParametersName animatorParametersName;
 
-    [SerializeField] private float inputControlSpeed;
-    private Vector3 inputControl;
+    [Header("Fades")] [Space(5)] 
+    [SerializeField] private float minDistanceToGroundByFall;
+    [SerializeField] private AnimationCrossFadeParameters fallFade;
+    [SerializeField] private AnimationCrossFadeParameters jumpIdleFade;
+    [SerializeField] private AnimationCrossFadeParameters jumpMoveFade;
     
+    private Vector3 inputControl;
+
     private void LateUpdate()
     {
-        Vector3 movementSpeed = transform.InverseTransformDirection(targetCharacterController.velocity); // Change Local to World transform position
-        inputControl = Vector3.MoveTowards(inputControl, targetCharacterMovement.TargetDirectionControl,inputControlSpeed * Time.deltaTime);
-        
-        targetAnimator.SetFloat("NormalizeMovementX",inputControl.x);
-        targetAnimator.SetFloat("NormalizeMovementZ",inputControl.z);
-        
-        targetAnimator.SetBool("IsGround", targetCharacterMovement.IsGrounded);
-        targetAnimator.SetBool("IsCrouch", targetCharacterMovement.IsCrouch);
-        targetAnimator.SetBool("IsSprint", targetCharacterMovement.IsSprint);
-        targetAnimator.SetBool("IsAiming", targetCharacterMovement.IsAiming);
-        
-        if(!targetCharacterMovement.IsGrounded)
-            targetAnimator.SetFloat("Jump", movementSpeed.y);
-        
+        Vector3 movementSpeed =
+            transform.InverseTransformDirection(targetCharacterController
+                .velocity); // Change Local to World transform position
+        inputControl = Vector3.MoveTowards(inputControl, targetCharacterMovement.TargetDirectionControl,
+            inputControlSpeed * Time.deltaTime);
+
+        targetAnimator.SetFloat(animatorParametersName.NormalizeMovementX, inputControl.x);
+        targetAnimator.SetFloat(animatorParametersName.NormalizeMovementY, inputControl.z);
+
+        targetAnimator.SetBool(animatorParametersName.Ground, targetCharacterMovement.IsGrounded);
+        targetAnimator.SetBool(animatorParametersName.Crouch, targetCharacterMovement.IsCrouch);
+        targetAnimator.SetBool(animatorParametersName.Sprint, targetCharacterMovement.IsSprint);
+        targetAnimator.SetBool(animatorParametersName.Aiming, targetCharacterMovement.IsAiming);
+
         Vector3 groundSpeed = targetCharacterController.velocity;
         groundSpeed.y = 0;
-        targetAnimator.SetFloat("GroundSpeed", groundSpeed.magnitude);
-        targetAnimator.SetFloat("DistanceToGround", targetCharacterMovement.DistanceToGround);
+        targetAnimator.SetFloat(animatorParametersName.GroundSpeed, groundSpeed.magnitude);
+
+        if (targetCharacterMovement.IsJump)
+        {
+            if (groundSpeed.magnitude <= 0.01f)
+                CrossFade(jumpIdleFade);
+            if (groundSpeed.magnitude > 0.01f)
+                CrossFade(jumpMoveFade);
+        }
+
+        if (!targetCharacterMovement.IsGrounded)
+        {
+            targetAnimator.SetFloat(animatorParametersName.Jump, movementSpeed.y);
+            
+            if (movementSpeed.y < 0 && targetCharacterMovement.DistanceToGround > minDistanceToGroundByFall)
+                CrossFade(fallFade);
+        }
+
+        targetAnimator.SetFloat(animatorParametersName.DistanceToGround, targetCharacterMovement.DistanceToGround);
+    }
+
+    private void CrossFade(AnimationCrossFadeParameters parameters)
+    {
+        targetAnimator.CrossFade(parameters.name, parameters.duration);
     }
 }

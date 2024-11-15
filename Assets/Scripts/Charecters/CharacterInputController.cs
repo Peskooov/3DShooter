@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterMovementController : MonoBehaviour
+public class CharacterInputController : MonoBehaviour
 {
     [SerializeField] private CharacterMovement targetCharacterMovement;
     [SerializeField] private ThirdPersonCamera targetCamera;
@@ -25,8 +25,7 @@ public class CharacterMovementController : MonoBehaviour
         else
             targetCamera.IsRotateTarget = false;
 
-        if(Input.GetMouseButton(0))
-            targetShooter.Shoot();
+        
         
         if (Input.GetButtonDown("Jump"))
             targetCharacterMovement.Jump();
@@ -41,7 +40,15 @@ public class CharacterMovementController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift))
             targetCharacterMovement.UnSprint();
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(0))
+        {
+            if (targetCharacterMovement.IsAiming)
+            {
+                targetShooter.Shoot();
+            }
+        }
+
+        if (Input.GetMouseButton(1))
         {
             targetCharacterMovement.Aiming();
             targetCamera.SetTargetOffset(aimingOffset);

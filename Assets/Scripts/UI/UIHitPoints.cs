@@ -9,5 +9,6 @@ public class UIHitPoints : MonoBehaviour
     private void Update()
     {
         slider.value = destructible.HitPoints;
+        Debug.Log(destructible.HitPoints);
     }
 }

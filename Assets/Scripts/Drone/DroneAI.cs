@@ -47,12 +47,14 @@ public class DroneAI : MonoBehaviour
         drone.MoveTo(movementPosition);
 
         if (shootTarget)
-        {
             drone.LookAt(shootTarget.position);
-            drone.Fire(shootTarget.position);
-        }
         else
              drone.LookAt(movementPosition);
+
+        if (shootTarget)
+        {
+            drone.Fire(shootTarget.position);
+        }
     }
 
     private void OnDrawGizmos()

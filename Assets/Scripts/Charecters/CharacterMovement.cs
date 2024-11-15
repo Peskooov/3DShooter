@@ -38,6 +38,7 @@ public class CharacterMovement : MonoBehaviour
     public bool IsCrouch => isCrouch;
     public bool IsSprint => isSprint;
     public bool IsAiming => isAiming;
+    public bool IsJump => isJump;
     public float DistanceToGround => distanceToGround;
     public bool IsGrounded => distanceToGround < 0.01f;
     

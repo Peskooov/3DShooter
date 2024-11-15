@@ -5,7 +5,6 @@ using UnityEngine.Serialization;
 
 public class Destructible : Entity
     {
-        
         [SerializeField] private bool isIndestructable;
         public bool IsIndestructable => isIndestructable;
         [SerializeField] private int hitPoints;
