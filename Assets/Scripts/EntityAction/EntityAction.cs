@@ -15,6 +15,7 @@ public abstract class EntityAction : MonoBehaviour
     public UnityEvent EventOnEnd => eventOnEnd;
 
     private EntityActionProperties properties;
+    public EntityActionProperties Properties => properties;
 
     private bool isStart;
     
