@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0468497c74b4b468cfdf6ce1ac16a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementArea: {fileID: 0}
+  movementArea: {fileID: 6360139821108998717, guid: b468888278597bb4aaf277eda51d9d1d, type: 3}
   fireDistance: 10
 --- !u!82 &2313909992799251129
 AudioSource:

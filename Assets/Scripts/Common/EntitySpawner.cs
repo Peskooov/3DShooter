@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EntitySpawner : MonoBehaviour
@@ -8,14 +9,17 @@ public class EntitySpawner : MonoBehaviour
         Loop
     }
 
-    [SerializeField] private Entity[] entityPreafabs;
+    [SerializeField] private Entity[] entityPrefabs;
     [SerializeField] private SpawnMode spawnMode;
 
     [SerializeField] private CubeArea cubeArea;
 
     [SerializeField] private int countSpawns;
     [SerializeField] private float respawnTime;
-
+    
+    private List<Drone> spawnedEntities = new List<Drone>();
+    private Drone[] drones;
+    
     private float timer;
 
     private void Start()
@@ -39,17 +43,43 @@ public class EntitySpawner : MonoBehaviour
 
             timer = respawnTime;
         }
+        
+        CheckForDestroyedEntities();
     }
 
     private void SpawnEntities()
     {
+        if (entityPrefabs.Length <= 0) return;
+
         for (int i = 0; i < countSpawns; i++)
         {
-            int index = Random.Range(0, entityPreafabs.Length);
-
-            GameObject entities = Instantiate(entityPreafabs[index].gameObject);
-
+            int index = Random.Range(0, entityPrefabs.Length);
+            
+            GameObject entities = Instantiate(entityPrefabs[index].gameObject);
+            
             entities.transform.position = cubeArea.GetRandomInsideZone();
+
+            Drone drone = entities.GetComponent<Drone>();
+            spawnedEntities.Add(drone);
+        }
+    }
+    
+    private void CheckForDestroyedEntities()
+    {
+        for (int i = spawnedEntities.Count - 1; i >= 0; i--)
+        {
+            if (spawnedEntities[i] == null)
+            {
+                spawnedEntities.RemoveAt(i);
+            }
+        }
+    }
+
+    public void DisableEntities()
+    {
+        for (int i = 0; i < spawnedEntities.Count; i++)
+        {
+            spawnedEntities[i].Disable();
         }
     }
 }

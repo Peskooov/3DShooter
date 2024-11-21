@@ -40,7 +40,7 @@ public class Destructible : Entity
                 currentHitPoints = hitPoints;
         }
 
-        public void HealFull(int heal)
+        public void HealFull()
         {
             currentHitPoints = hitPoints;
         }

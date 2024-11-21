@@ -1,5 +1,4 @@
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Drone : Destructible
 {
@@ -21,16 +20,28 @@ public class Drone : Destructible
     
     [SerializeField] private float timePatrolDelay;
     [SerializeField] private Vector3 maxStepDistance;
-    
-    private Vector3 targetPosition;
-    private float timer;
-    private bool isWaiting;
 
+    private bool isDisabled;
+    public bool IsDisabled => isDisabled;
+    
     private void Update()
     {
         Hover();
     }
 
+    public void Disable()
+    {
+        isDisabled = true;
+        
+        for (int i = 0; i < meshComponents.Length; i++)
+        {
+            meshComponents[i].transform.SetParent(meshComponents[0].transform);
+            
+            if (!meshComponents[0].GetComponent<Rigidbody>())
+                meshComponents[0].AddComponent<Rigidbody>();
+        }
+    }
+    
     public void LookAt(Vector3 target)
     {
         transform.rotation = Quaternion.RotateTowards(transform.rotation,
@@ -71,42 +82,7 @@ public class Drone : Destructible
     
     private void Hover()
     {
+        if(isDisabled) return;
         mainMesh.position += new Vector3(0, Mathf.Sin(Time.time * hoverAmplitude) * hoverSpeed * Time.deltaTime, 0);
-    }
-
-    private void Move()
-    {
-        if (Vector3.Distance(transform.position, targetPosition) <= 0.1f)
-        {
-            SetWaiting();
-            return; 
-        }
-        
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, hoverSpeed * Time.deltaTime);
-        
-        Vector3 direction = (targetPosition - transform.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * hoverSpeed);
-    }
-    
-    private void SetNextPosition()
-    {
-        targetPosition = new Vector3(transform.position.x + Random.Range(-maxStepDistance.x, maxStepDistance.x), transform.position.y, 
-                                     transform.position.z + Random.Range(-maxStepDistance.z, maxStepDistance.z)); 
-  
-        timer = timePatrolDelay;
-    }
-
-    private void SetWaiting()
-    {
-        if (timer > 0)
-        {
-            timer -= Time.deltaTime;
-        }
-        else
-        {
-            timer = 0;
-            SetNextPosition();
-        }
     }
 }

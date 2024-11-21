@@ -27,7 +27,7 @@ public class DroneAI : MonoBehaviour
     {
         UpdateAI();
     }
-
+    
     private void OnDroneDeath()
     {
         enabled = false;
@@ -35,6 +35,8 @@ public class DroneAI : MonoBehaviour
     
     private void UpdateAI()
     {
+        if(drone.IsDisabled) return;
+        
         if (transform.position == movementPosition)
             movementPosition = movementArea.GetRandomInsideZone();
 
@@ -43,6 +45,8 @@ public class DroneAI : MonoBehaviour
 
         if (Vector3.Distance(transform.position, player.position) <= fireDistance)
             shootTarget = player;
+        else
+            shootTarget = null;
         
         drone.MoveTo(movementPosition);
 

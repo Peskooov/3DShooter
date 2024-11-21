@@ -6,6 +6,8 @@ public class CharacterAnimatorParametersName
 {
     public string NormalizeMovementX;
     public string NormalizeMovementY;
+    public string ClimbInput;
+    public string Climb;
     public string Sprint;
     public string Crouch;
     public string Aiming;
@@ -47,10 +49,20 @@ public class CharacterAnimatorState : MonoBehaviour
         inputControl = Vector3.MoveTowards(inputControl, targetCharacterMovement.TargetDirectionControl,
             inputControlSpeed * Time.deltaTime);
 
-        targetAnimator.SetFloat(animatorParametersName.NormalizeMovementX, inputControl.x);
-        targetAnimator.SetFloat(animatorParametersName.NormalizeMovementY, inputControl.z);
-
+        if (targetCharacterMovement.IsClimbing)
+        {
+            targetAnimator.speed = Mathf.Abs(inputControl.z);
+            targetAnimator.SetFloat(animatorParametersName.ClimbInput, inputControl.z);
+        }
+        else
+        {
+            targetAnimator.speed = 1;
+            targetAnimator.SetFloat(animatorParametersName.NormalizeMovementX, inputControl.x);
+            targetAnimator.SetFloat(animatorParametersName.NormalizeMovementY, inputControl.z);
+        }
+        
         targetAnimator.SetBool(animatorParametersName.Ground, targetCharacterMovement.IsGrounded);
+        targetAnimator.SetBool(animatorParametersName.Climb, targetCharacterMovement.IsClimbing);
         targetAnimator.SetBool(animatorParametersName.Crouch, targetCharacterMovement.IsCrouch);
         targetAnimator.SetBool(animatorParametersName.Sprint, targetCharacterMovement.IsSprint);
         targetAnimator.SetBool(animatorParametersName.Aiming, targetCharacterMovement.IsAiming);
@@ -59,20 +71,23 @@ public class CharacterAnimatorState : MonoBehaviour
         groundSpeed.y = 0;
         targetAnimator.SetFloat(animatorParametersName.GroundSpeed, groundSpeed.magnitude);
 
-        if (targetCharacterMovement.IsJump)
+        if (!targetCharacterMovement.IsClimbing)
         {
-            if (groundSpeed.magnitude <= 0.01f)
-                CrossFade(jumpIdleFade);
-            if (groundSpeed.magnitude > 0.01f)
-                CrossFade(jumpMoveFade);
-        }
+            if (targetCharacterMovement.IsJump)
+            {
+                if (groundSpeed.magnitude <= 0.01f)
+                    CrossFade(jumpIdleFade);
+                if (groundSpeed.magnitude > 0.01f)
+                    CrossFade(jumpMoveFade);
+            }
 
-        if (!targetCharacterMovement.IsGrounded)
-        {
-            targetAnimator.SetFloat(animatorParametersName.Jump, movementSpeed.y);
-            
-            if (movementSpeed.y < 0 && targetCharacterMovement.DistanceToGround > minDistanceToGroundByFall)
-                CrossFade(fallFade);
+            if (!targetCharacterMovement.IsGrounded)
+            {
+                targetAnimator.SetFloat(animatorParametersName.Jump, movementSpeed.y);
+
+                if (movementSpeed.y < 0 && targetCharacterMovement.DistanceToGround > minDistanceToGroundByFall)
+                    CrossFade(fallFade);
+            }
         }
 
         targetAnimator.SetFloat(animatorParametersName.DistanceToGround, targetCharacterMovement.DistanceToGround);

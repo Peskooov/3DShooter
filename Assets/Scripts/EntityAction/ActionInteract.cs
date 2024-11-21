@@ -3,7 +3,9 @@ using UnityEngine;
 
 public enum InteractType
 {
-    PickupItem
+    PickupItem,
+    EnteringCode,
+    DisableDrone
 }
 
 [Serializable]
@@ -20,11 +22,23 @@ public class ActionInteract : EntityContextAction
     
     public InteractType Type => type;
     
-    private new ActionInteractProperties properties;
+    private ActionInteractProperties properties;
+
+    private bool isFreezePosition;
+    public bool IsFreezePosition => isFreezePosition;
     
     public override void SetProperties(EntityActionProperties properties)
     {
         this.properties = properties as ActionInteractProperties;
+    }
+
+    private void Update()
+    {
+        if (isFreezePosition)
+        {
+            owner.position = Vector3.MoveTowards(owner.position, properties.InteractTransform.position, Time.deltaTime);
+            owner.rotation = Quaternion.LookRotation( properties.InteractTransform.forward, Vector3.up);
+        }
     }
 
     public override void StartAction()
@@ -32,7 +46,12 @@ public class ActionInteract : EntityContextAction
         if(!IsCanStart) return;
         
         base.StartAction();
+        isFreezePosition = true;
+    }
 
-        owner.position = properties.InteractTransform.position;
+    public override void EndAction()
+    {
+        base.EndAction();
+        isFreezePosition = false;
     }
 }

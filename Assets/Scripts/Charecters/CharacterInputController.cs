@@ -1,11 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterInputController : MonoBehaviour
 {
     [SerializeField] private CharacterMovement targetCharacterMovement;
+    [SerializeField] private EntityActionCollector targetActionCollector;
     [SerializeField] private ThirdPersonCamera targetCamera;
     [SerializeField] private PlayerShooter targetShooter;
-    
+
     [SerializeField] private Vector3 aimingOffset;
 
     private void Start()
@@ -16,8 +18,9 @@ public class CharacterInputController : MonoBehaviour
 
     private void Update()
     {
-        targetCharacterMovement.TargetDirectionControl =
-            new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            targetCharacterMovement.TargetDirectionControl =
+                new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        
         targetCamera.RotationControl = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
         if (targetCharacterMovement.TargetDirectionControl != Vector3.zero || targetCharacterMovement.IsAiming)
@@ -25,9 +28,17 @@ public class CharacterInputController : MonoBehaviour
         else
             targetCamera.IsRotateTarget = false;
 
-        
-        
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKey(KeyCode.E))
+        {
+            List<EntityContextAction> actionsList = targetActionCollector.GetAction<EntityContextAction>();
+
+            for (int i = 0; i < actionsList.Count; i++)
+            {
+                actionsList[i].StartAction();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
             targetCharacterMovement.Jump();
 
         if (Input.GetKeyDown(KeyCode.C))
