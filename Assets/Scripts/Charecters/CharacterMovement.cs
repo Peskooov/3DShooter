@@ -4,8 +4,7 @@ public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] private CharacterController characterController;
 
-    [Header("Movement")] 
-    [SerializeField] private float accelerationRate;
+    [Header("Movement")] [SerializeField] private float accelerationRate;
     [SerializeField] private float rifleRunSpeed;
     [SerializeField] private float rifleSprintSpeed;
     [SerializeField] private float aimingWalkSpeed;
@@ -34,7 +33,6 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 movementDirection;
 
     [HideInInspector] public Vector3 TargetDirectionControl;
-    
 
     public bool IsCrouch => isCrouch;
     public bool IsClimbing => isClimbing;
@@ -44,6 +42,8 @@ public class CharacterMovement : MonoBehaviour
     public bool IsJump => isJump;
     public float DistanceToGround => distanceToGround;
     public bool IsGrounded => distanceToGround < 0.01f;
+
+    public bool UpdatePosition;
 
     private void Start()
     {
@@ -96,9 +96,9 @@ public class CharacterMovement : MonoBehaviour
         {
             movementDirection += Physics.gravity * Time.deltaTime;
         }
-        
-        if (characterController.enabled)
-            characterController.Move(movementDirection * Time.deltaTime);
+
+        //if (UpdatePosition == true)
+        characterController.Move(movementDirection * Time.deltaTime);
     }
 
     public void Jump()
@@ -152,7 +152,7 @@ public class CharacterMovement : MonoBehaviour
         {
             return crouchSpeed;
         }
-        
+
         if (isAiming)
         {
             if (isSprint)
@@ -216,13 +216,13 @@ public class CharacterMovement : MonoBehaviour
     }
 
     private Vector3 x;
-    
+
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Vector3 startRay = transform.position + Vector3.up * 0.1f;
         Vector3 direction = transform.forward;
-        
+
         Gizmos.color = Color.red;
         Gizmos.DrawRay(startRay, direction * raycastForwardDistance);
         Gizmos.DrawRay(x, direction * raycastForwardDistance);
