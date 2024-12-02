@@ -5174,6 +5174,7 @@ GameObject:
   - component: {fileID: 1372706863}
   - component: {fileID: 1372706862}
   - component: {fileID: 1372706861}
+  - component: {fileID: 1372706864}
   m_Layer: 0
   m_Name: Alien Soldier
   m_TagString: Player
@@ -5336,6 +5337,21 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_ScoreValue: 0
+--- !u!114 &1372706864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372706856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 865094cd5f463404d8a71a5b89e20f3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewingAngle: 120
+  viewingDistance: 20
+  viewHeight: 1.7
 --- !u!4 &1376178172 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -5665043316445423941, guid: f0afaee0cb55abd489210bb549bc8f9a, type: 3}
@@ -8882,6 +8898,7 @@ GameObject:
   - component: {fileID: 6846249239207626112}
   - component: {fileID: 6846249239207626114}
   - component: {fileID: 6846249239207626115}
+  - component: {fileID: 6846249239207626116}
   m_Layer: 0
   m_Name: Player Soldier
   m_TagString: Player
@@ -10525,6 +10542,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentTransformWithActions: {fileID: 1115671330}
+--- !u!114 &6846249239207626116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3011760599453503231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f30ba05503a1642a4a10144562104f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderType: 0
+  colliderObject: {fileID: 6846249239207626111}
 --- !u!1 &6858209845494892679
 GameObject:
   m_ObjectHideFlags: 0
