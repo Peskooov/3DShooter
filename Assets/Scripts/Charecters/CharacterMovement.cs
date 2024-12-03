@@ -42,11 +42,13 @@ public class CharacterMovement : MonoBehaviour
     public bool IsJump => isJump;
     public float DistanceToGround => distanceToGround;
     public bool IsGrounded => distanceToGround < 0.01f;
-
     public bool UpdatePosition;
+    public float CurrentSpeed => GetCurrentSpeedByState();
 
     private void Start()
     {
+        UpdatePosition = true;
+
         baseCharacterHeight = characterController.height;
         baseCharacterHeightOffset = characterController.center.y;
     }
@@ -97,8 +99,8 @@ public class CharacterMovement : MonoBehaviour
             movementDirection += Physics.gravity * Time.deltaTime;
         }
 
-        //if (UpdatePosition == true)
-        characterController.Move(movementDirection * Time.deltaTime);
+        if (UpdatePosition)
+            characterController.Move(movementDirection * Time.deltaTime);
     }
 
     public void Jump()
