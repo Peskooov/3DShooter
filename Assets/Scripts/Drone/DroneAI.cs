@@ -78,7 +78,8 @@ public class DroneAI : MonoBehaviour
     private void ActionFire()
     {
         if (shootTarget != null)
-        { // добавить если виден
+        {
+            // добавить если виден
             drone.Fire(shootTarget.position);
         }
     }
@@ -95,8 +96,6 @@ public class DroneAI : MonoBehaviour
 
         for (int i = 0; i < targets.Count; i++)
         {
-            Debug.Log(colliderViewer.IsObjectVisible(targets[i].gameObject));
-
             if (colliderViewer.IsObjectVisible(targets[i].gameObject))
                 return targets[i].transform;
         }
