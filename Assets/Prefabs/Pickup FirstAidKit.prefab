@@ -140,7 +140,7 @@ Transform:
   m_GameObject: {fileID: 4580960315042543803}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: -0.28, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -310,10 +310,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7108459203722020769, guid: 7889290047881a340a4cf50eb20b1560, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7462606484016443945, guid: 7889290047881a340a4cf50eb20b1560, type: 3}
       propertyPath: m_Name
       value: UseHint
       objectReference: {fileID: 0}
+    - target: {fileID: 7848300034222250367, guid: 7889290047881a340a4cf50eb20b1560, type: 3}
+      propertyPath: interactAction
+      value: 
+      objectReference: {fileID: 2230159839290336096}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

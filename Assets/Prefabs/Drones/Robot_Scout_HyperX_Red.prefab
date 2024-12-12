@@ -217,6 +217,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  eventOnGetDamage:
+    m_PersistentCalls:
+      m_Calls: []
   m_ScoreValue: 0
   weapons:
   - {fileID: 8707505490946870062}
@@ -231,10 +234,10 @@ MonoBehaviour:
   deadMaterials:
   - {fileID: 2100000, guid: a40bcd1e1ab25b147b63579679f1e731, type: 2}
   - {fileID: 2100000, guid: 8ffd01eddcc9d6a4ba689dedbf6687fe, type: 2}
-  hoverAmplitude: 2
+  hoverAmplitude: 1
   hoverSpeed: 2
   movementSpeed: 2
-  rotationLerpFactor: 100
+  rotationLerpFactor: 150
   timePatrolDelay: 5
   maxStepDistance: {x: 5, y: 0, z: 5}
 --- !u!114 &9027231058766743886
@@ -249,8 +252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0468497c74b4b468cfdf6ce1ac16a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementArea: {fileID: 6360139821108998717, guid: b468888278597bb4aaf277eda51d9d1d, type: 3}
-  fireDistance: 10
+  movementArea: {fileID: 0}
+  colliderViewer: {fileID: 599941403289157692}
 --- !u!82 &2313909992799251129
 AudioSource:
   m_ObjectHideFlags: 0
@@ -307,7 +310,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.134
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -462,6 +465,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1267752405110430009}
+  - component: {fileID: 599941403289157692}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -487,6 +491,23 @@ Transform:
   - {fileID: 244519327839819786}
   m_Father: {fileID: 5916576168041042880}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &599941403289157692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6191505570268468653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 865094cd5f463404d8a71a5b89e20f3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewingAngle: 150
+  viewingDistance: 10
+  viewHeight: 0
+  sideViewingAngle: 0
+  timeToDetection: 0
 --- !u!1 &6625080770179723802
 GameObject:
   m_ObjectHideFlags: 0
