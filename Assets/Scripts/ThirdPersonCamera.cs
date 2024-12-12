@@ -9,16 +9,16 @@ public class ThirdPersonCamera : MonoBehaviour
     [SerializeField] private float changeOffsetRate;
     [SerializeField] private float rotateTargetLerpRate;
 
-    [Header("Rotation Limit")] 
-    [SerializeField] private float minLimitY;
+    [Header("Rotation Limit")] [SerializeField]
+    private float minLimitY;
+
     [SerializeField] private float maxLimitY;
 
-    [Header("Distance")]
-    [SerializeField] private float distance;
+    [Header("Distance")] [SerializeField] private float distance;
     [SerializeField] private float minDistance;
     [SerializeField] private float distanceLerpRate;
     [SerializeField] private float distanceOffsetFromCollisionHit;
-    
+
     [HideInInspector] public bool IsRotateTarget;
     [HideInInspector] public Vector2 RotationControl;
 
@@ -26,7 +26,7 @@ public class ThirdPersonCamera : MonoBehaviour
     private float deltaRotationY;
 
     private float currentDistance;
-    
+
     private Vector3 targetOffset;
     private Vector3 defaultOffset;
 
@@ -34,7 +34,7 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         targetOffset = offset;
         defaultOffset = offset;
-        
+
         transform.SetParent(null);
     }
 
@@ -51,7 +51,7 @@ public class ThirdPersonCamera : MonoBehaviour
         Quaternion finalRotation = Quaternion.Euler(deltaRotationY, deltaRotationX, 0);
         Vector3 finalPosition = target.position - (finalRotation * Vector3.forward * distance);
         finalPosition = AddLocalOffset(finalPosition);
-        
+
         // Calculate current distance
         float targetDistance = distance;
 
@@ -62,7 +62,7 @@ public class ThirdPersonCamera : MonoBehaviour
         if (Physics.Linecast(target.position + new Vector3(0, offset.y, 0), finalPosition, out hit))
         {
             float distanceToHit = Vector3.Distance(target.position + new Vector3(0, offset.y, 0), hit.point);
-            
+
             if (hit.transform != target)
             {
                 if (distanceToHit < distance)
@@ -84,8 +84,10 @@ public class ThirdPersonCamera : MonoBehaviour
         // Rotation target
         if (IsRotateTarget)
         {
-            Quaternion targetRotation = Quaternion.Euler(transform.rotation.x, transform.eulerAngles.y, transform.eulerAngles.z);
-            target.rotation = Quaternion.RotateTowards(target.rotation, targetRotation, Time.deltaTime * rotateTargetLerpRate);
+            Quaternion targetRotation =
+                Quaternion.Euler(transform.rotation.x, transform.eulerAngles.y, transform.eulerAngles.z);
+            target.rotation =
+                Quaternion.RotateTowards(target.rotation, targetRotation, Time.deltaTime * rotateTargetLerpRate);
         }
     }
 
@@ -117,5 +119,10 @@ public class ThirdPersonCamera : MonoBehaviour
     public void SetDefaultOffset()
     {
         targetOffset = defaultOffset;
+    }
+
+    public void SetTarget(Transform setTarget)
+    {
+        target = setTarget;
     }
 }

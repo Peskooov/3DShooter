@@ -9,12 +9,12 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] private ParticleSystem muzzleParticleSystem;
     [SerializeField] private AudioSource audioSource;
-    
+
     public WeaponMode Mode => mode;
     public float MaxPrimaryEnergy => maxPrimaryEnergy;
     public float PrimaryEnergy => primaryEnergy;
     public bool CanFire => refireTimer <= 0 && energyIsRestored == false;
-    
+
     private float refireTimer;
     private float primaryEnergy;
     private bool energyIsRestored;
@@ -28,11 +28,11 @@ public class Weapon : MonoBehaviour
         owner = transform.root.GetComponent<Destructible>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (refireTimer > 0)
             refireTimer -= Time.deltaTime;
-        
+
         UpdateEnergy();
     }
 
@@ -47,7 +47,7 @@ public class Weapon : MonoBehaviour
 
     public void Fire()
     {
-        if(energyIsRestored) return;
+        if (energyIsRestored) return;
         if (!CanFire) return;
         if (!weaponProperties) return;
         if (refireTimer > 0) return;
@@ -62,11 +62,17 @@ public class Weapon : MonoBehaviour
         refireTimer = weaponProperties.RateOfFire;
 
         {
-            muzzleParticleSystem.time = 0;
-            muzzleParticleSystem.Play();
-            
-            audioSource.clip = weaponProperties.LaunchSFX;
-            audioSource.Play();
+            if (muzzleParticleSystem)
+            {
+                muzzleParticleSystem.time = 0;
+                muzzleParticleSystem.Play();
+            }
+
+            if (audioSource)
+            {
+                audioSource.clip = weaponProperties.LaunchSFX;
+                audioSource.Play();
+            }
         }
     }
 
@@ -78,10 +84,10 @@ public class Weapon : MonoBehaviour
         {
             offset = offset * Vector3.Distance(firePoint.position, pos) * weaponProperties.SpreadShootDistanceFactor;
         }
-        
+
         firePoint.LookAt(pos + offset);
     }
-    
+
     public void AssignLoadOut(WeaponProperties properties)
     {
         if (mode != properties.Mode) return;
@@ -89,10 +95,10 @@ public class Weapon : MonoBehaviour
         refireTimer = 0;
         weaponProperties = properties;
     }
-    
+
     private bool TryDrawEnergy(int count)
     {
-        if(count == 0) return true;
+        if (count == 0) return true;
 
         if (primaryEnergy >= count)
         {
@@ -101,7 +107,7 @@ public class Weapon : MonoBehaviour
         }
 
         energyIsRestored = true;
-        
+
         return false;
     }
 }

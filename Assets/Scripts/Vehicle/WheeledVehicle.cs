@@ -56,28 +56,29 @@ public class WheelAxle
 }
 
 [RequireComponent(typeof(Rigidbody))]
-public class WheeledVehicle : MonoBehaviour
+public class WheeledVehicle : Vehicle
 {
     [SerializeField] private WheelAxle[] wheelAxles;
     [SerializeField] private float maxMotorTorque;
     [SerializeField] private float breakTorque;
     [SerializeField] private float maxSteerAngle;
-    [SerializeField] private float maxLinearVelocity;
 
     private Rigidbody rb;
 
-    public float LinearVelocity => rb.velocity.magnitude;
+    public override float LinearVelocity => rb.velocity.magnitude;
 
     private void Start()
     {
+        base.Start();
+
         rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        float targetMotor = maxMotorTorque * Input.GetAxis("Vertical");
-        float brakeTorque = breakTorque * Input.GetAxis("Jump");
-        float steering = maxSteerAngle * Input.GetAxis("Horizontal");
+        float targetMotor = maxMotorTorque * TargetInputControl.z;
+        float brakeTorque = breakTorque * TargetInputControl.y;
+        float steering = maxSteerAngle * TargetInputControl.x;
 
         for (int i = 0; i < wheelAxles.Length; i++)
         {
