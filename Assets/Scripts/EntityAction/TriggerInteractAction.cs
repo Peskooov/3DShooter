@@ -7,12 +7,13 @@ public class TriggerInteractAction : MonoBehaviour
 {
     [SerializeField] private InteractType interactType;
     [SerializeField] private int interactAmount;
-    [SerializeField] private ActionInteractProperties actionProperties;
-    [SerializeField] private UnityEvent eventOnInteract;
-    public UnityEvent EventOnInteract => eventOnInteract;
-    
-    private GameObject owner;
+    [SerializeField] private UnityEvent eventStartInteract;
+    [SerializeField] private UnityEvent eventEndInteract;
+    [SerializeField] protected ActionInteractProperties actionProperties;
 
+    //public UnityEvent EventOnInteract => eventStartInteract;
+
+    protected GameObject owner;
     protected ActionInteract action;
 
     protected virtual void InitActionProperties()
@@ -30,15 +31,15 @@ public class TriggerInteractAction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(interactAmount == 0) return;
-        
+        if (interactAmount == 0) return;
+
         EntityActionCollector actionCollector = other.GetComponent<EntityActionCollector>();
 
-        if (actionCollector)
+        if (actionCollector != null)
         {
             action = GetActionInteract(actionCollector);
 
-            if (action)
+            if (action != null)
             {
                 InitActionProperties();
 
@@ -53,15 +54,15 @@ public class TriggerInteractAction : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(interactAmount == 0) return;
-        
+        if (interactAmount == 0) return;
+
         EntityActionCollector actionCollector = other.GetComponent<EntityActionCollector>();
 
-        if (actionCollector)
+        if (actionCollector != null)
         {
             action = GetActionInteract(actionCollector);
 
-            if (action)
+            if (action != null)
             {
                 action.IsCanStart = false;
                 action.EventOnStart.RemoveListener(ActionStarted);
@@ -73,18 +74,21 @@ public class TriggerInteractAction : MonoBehaviour
     private void ActionStarted()
     {
         OnStartAction(owner);
+
+        eventStartInteract?.Invoke();
+
+        interactAmount--;
     }
 
     private void ActionEnded()
     {
         action.IsCanStart = false;
+        action.IsCanEnd = false;
         action.EventOnStart.RemoveListener(ActionStarted);
         action.EventOnEnd.RemoveListener(ActionEnded);
-        
-        eventOnInteract?.Invoke();
-        
-        interactAmount--;
-        
+
+        eventEndInteract?.Invoke();
+
         OnEndAction(owner);
     }
 

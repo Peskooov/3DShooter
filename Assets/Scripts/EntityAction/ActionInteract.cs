@@ -5,7 +5,8 @@ public enum InteractType
 {
     PickupItem,
     EnteringCode,
-    DisableDrone
+    DisableDrone,
+    UseVehicle
 }
 
 [Serializable]
@@ -17,21 +18,22 @@ public class ActionInteractProperties : EntityActionProperties
 
 public class ActionInteract : EntityContextAction
 {
+    [SerializeField] protected Transform owner;
     [SerializeField] private InteractType type;
-    [SerializeField] private Transform owner;
-    
+
     public InteractType Type => type;
-    
-    private ActionInteractProperties properties;
+
+    protected new ActionInteractProperties Properties;
 
     private bool isFreezePosition;
     public bool IsFreezePosition => isFreezePosition;
-    
-    public override void SetProperties(EntityActionProperties properties)
+
+    public override void SetProperties(EntityActionProperties prop)
     {
-        this.properties = properties as ActionInteractProperties;
+        Properties = prop as ActionInteractProperties;
     }
 
+    /*
     private void Update()
     {
         if (isFreezePosition)
@@ -44,7 +46,7 @@ public class ActionInteract : EntityContextAction
     public override void StartAction()
     {
         if(!IsCanStart) return;
-        
+
         base.StartAction();
         isFreezePosition = true;
     }
@@ -53,5 +55,5 @@ public class ActionInteract : EntityContextAction
     {
         base.EndAction();
         isFreezePosition = false;
-    }
+    }*/
 }

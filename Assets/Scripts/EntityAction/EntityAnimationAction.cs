@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class EntityAnimationAction : EntityAction
@@ -9,11 +8,11 @@ public class EntityAnimationAction : EntityAction
 
     private Timer timer;
     private bool isPlayingAnimation;
-    
+
     public override void StartAction()
     {
         base.StartAction();
-        
+
         animator.CrossFade(actionAnimationName, timeDuration);
 
         timer = Timer.CreateTimer(timeDuration, true);
@@ -37,7 +36,7 @@ public class EntityAnimationAction : EntityAction
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(actionAnimationName))
             {
                 isPlayingAnimation = false;
-                
+
                 EndAction();
             }
         }

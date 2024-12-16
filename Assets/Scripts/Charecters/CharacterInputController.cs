@@ -1,14 +1,13 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterInputController : MonoBehaviour
 {
     [SerializeField] private CharacterMovement targetCharacterMovement;
-    [SerializeField] private EntityActionCollector targetActionCollector;
     [SerializeField] private ThirdPersonCamera targetCamera;
     [SerializeField] private PlayerShooter targetShooter;
 
     [SerializeField] private Vector3 aimingOffset;
+    [SerializeField] private Vector3 defaultOffset;
 
     private void Start()
     {
@@ -18,25 +17,15 @@ public class CharacterInputController : MonoBehaviour
 
     private void Update()
     {
-            targetCharacterMovement.TargetDirectionControl =
-                new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        
+        targetCharacterMovement.TargetDirectionControl =
+            new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
         targetCamera.RotationControl = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
         if (targetCharacterMovement.TargetDirectionControl != Vector3.zero || targetCharacterMovement.IsAiming)
             targetCamera.IsRotateTarget = true;
         else
             targetCamera.IsRotateTarget = false;
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            List<EntityContextAction> actionsList = targetActionCollector.GetAction<EntityContextAction>();
-
-            for (int i = 0; i < actionsList.Count; i++)
-            {
-                actionsList[i].StartAction();
-            }
-        }
 
         if (Input.GetKeyDown(KeyCode.Space))
             targetCharacterMovement.Jump();
@@ -70,5 +59,13 @@ public class CharacterInputController : MonoBehaviour
             targetCharacterMovement.UnAiming();
             targetCamera.SetDefaultOffset();
         }
+    }
+
+    public void AssignCamera(ThirdPersonCamera thirdPersonCamera)
+    {
+        targetCamera = thirdPersonCamera;
+        targetCamera.IsRotateTarget = false;
+        targetCamera.SetTargetOffset(defaultOffset);
+        targetCamera.SetTarget(targetCharacterMovement.transform);
     }
 }

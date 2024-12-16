@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7129429537694653624}
   - component: {fileID: 3954165063721398055}
   - component: {fileID: 204951693041069253}
+  - component: {fileID: 4793460871877520116}
   m_Layer: 0
   m_Name: Player Soldier
   m_TagString: Player
@@ -108,7 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCharacterMovement: {fileID: 3683754476236210688}
-  targetActionCollector: {fileID: 3954165063721398055}
   targetCamera: {fileID: 4911178402446790595}
   targetShooter: {fileID: 9141376139871889140}
   aimingOffset: {x: 0.8, y: 1.7, z: 0.5}
@@ -174,6 +174,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colliderType: 0
   colliderObject: {fileID: 6544934394335104960}
+--- !u!114 &4793460871877520116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467056767986101712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 181d7eec6ae8ce94e91eb78df7aeddbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetActionCollector: {fileID: 3954165063721398055}
 --- !u!1 &475054688265718407
 GameObject:
   m_ObjectHideFlags: 0
@@ -2065,6 +2078,7 @@ MonoBehaviour:
   actionAnimationName: Entering Code
   timeDuration: 0.1
   IsCanStart: 0
+  IsCanEnd: 0
   type: 1
   owner: {fileID: 7781532108895209526}
 --- !u!1 &7058316878579799001
@@ -2539,6 +2553,7 @@ MonoBehaviour:
   actionAnimationName: Pickup Item
   timeDuration: 0.1
   IsCanStart: 0
+  IsCanEnd: 0
   type: 0
   owner: {fileID: 7781532108895209526}
 --- !u!1 &7663506151229144201
@@ -2799,6 +2814,7 @@ MonoBehaviour:
   actionAnimationName: Entering Code
   timeDuration: 0.1
   IsCanStart: 0
+  IsCanEnd: 0
   type: 2
   owner: {fileID: 7781532108895209526}
 --- !u!1 &8269813333121959939

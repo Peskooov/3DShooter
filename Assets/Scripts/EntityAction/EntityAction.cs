@@ -3,7 +3,6 @@ using UnityEngine.Events;
 
 public abstract class EntityActionProperties
 {
-    
 }
 
 public abstract class EntityAction : MonoBehaviour
@@ -17,24 +16,24 @@ public abstract class EntityAction : MonoBehaviour
     private EntityActionProperties properties;
     public EntityActionProperties Properties => properties;
 
-    private bool isStart;
-    
+    private bool isStarted;
+
     public virtual void StartAction()
     {
-        if(isStart) return;
+        if (isStarted == true) return;
 
-        isStart = true;
+        isStarted = true;
         eventOnStart?.Invoke();
     }
 
     public virtual void EndAction()
     {
-        isStart = false;
+        isStarted = false;
         eventOnEnd?.Invoke();
     }
 
-    public virtual void SetProperties(EntityActionProperties properties)
+    public virtual void SetProperties(EntityActionProperties prop)
     {
-        this.properties = properties;
+        properties = prop;
     }
 }

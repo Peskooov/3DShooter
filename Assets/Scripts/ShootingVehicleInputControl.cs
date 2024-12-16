@@ -2,7 +2,7 @@
 
 public class ShootingVehicleInputControl : VehicleInputControl
 {
-    [SerializeField] private CameraShooter cameraShooter;
+    /*[SerializeField] private CameraShooter cameraShooter;
     [SerializeField] private Transform aimPoint;
 
     protected override void Update()
@@ -15,5 +15,5 @@ public class ShootingVehicleInputControl : VehicleInputControl
         {
             cameraShooter.Shoot();
         }
-    }
+    }*/
 }

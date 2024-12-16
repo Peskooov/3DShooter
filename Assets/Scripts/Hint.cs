@@ -27,30 +27,31 @@ public class Hint : MonoBehaviour
         lookTransform = Camera.main.transform;
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
-        if (interactAction)
-            interactAction.EventOnInteract.AddListener(InteractEnded);
+        hint.SetActive(false);
 
-        aiAlienSoldiers = new List<AIAlienSoldier>();
-
-        // Поиск всех объектов AIAlienSoldier на сцене и добавление их в список
-        AIAlienSoldier[] soldiers = FindObjectsOfType<AIAlienSoldier>();
-        aiAlienSoldiers.AddRange(soldiers);
-        Debug.Log(aiAlienSoldiers.Count);
-        // Подписка на события видимости
-        foreach (var soldier in aiAlienSoldiers)
+        if (hintType == HintType.Player)
         {
-            soldier.OnVisibilityChanged += UpdateUI;
+            aiAlienSoldiers = new List<AIAlienSoldier>();
+
+            // Поиск всех объектов AIAlienSoldier на сцене и добавление их в список
+            AIAlienSoldier[] soldiers = FindObjectsOfType<AIAlienSoldier>();
+            aiAlienSoldiers.AddRange(soldiers);
+            // Подписка на события видимости
+            foreach (var soldier in aiAlienSoldiers)
+            {
+                soldier.OnVisibilityChanged += UpdateUI;
+            }
         }
     }
 
     private void OnDestroy()
     {
-        if (!interactAction) return;
-        interactAction.EventOnInteract.RemoveListener(InteractEnded);
-
-        foreach (var soldier in aiAlienSoldiers)
+        if (hintType == HintType.Player)
         {
-            soldier.OnVisibilityChanged -= UpdateUI;
+            foreach (var soldier in aiAlienSoldiers)
+            {
+                soldier.OnVisibilityChanged -= UpdateUI;
+            }
         }
     }
 
