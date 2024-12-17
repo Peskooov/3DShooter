@@ -6,7 +6,9 @@ public class ActionUseVehicleProperties : ActionInteractProperties
 {
     public Vehicle Vehicle;
     public VehicleInputControl VehicleInputControl;
+    public ShootingVehicleInputControl ShootingVehicleInputControl;
     public GameObject Hint;
+    public GameObject Sight;
     public Transform[] ExitPointsTransform;
 }
 
@@ -55,9 +57,15 @@ public class ActionUseVehicle : ActionInteract
 
         //Camera
         prop.VehicleInputControl.AssignCamera(thirdPersonCamera);
+        if (prop.ShootingVehicleInputControl != null)
+            prop.ShootingVehicleInputControl.AssignCamera(thirdPersonCamera);
 
         //VehicleInput
         prop.VehicleInputControl.enabled = true;
+        if (prop.ShootingVehicleInputControl != null)
+            prop.ShootingVehicleInputControl.enabled = true;
+        if (prop.Sight != null)
+            prop.Sight.SetActive(true);
         prop.Vehicle.enabled = true; //включаем возможность перемещения транспорта
         prop.Vehicle.GetComponent<Rigidbody>().isKinematic = false; //возвращаем транспорту влияние физики.
 
@@ -83,6 +91,10 @@ public class ActionUseVehicle : ActionInteract
 
         //VehicleInput
         prop.VehicleInputControl.enabled = false;
+        if (prop.ShootingVehicleInputControl != null)
+            prop.ShootingVehicleInputControl.enabled = false;
+        if (prop.Sight != null)
+            prop.Sight.SetActive(false);
         prop.Vehicle.enabled = false;
         prop.Vehicle.GetComponent<Rigidbody>().isKinematic = true;
 

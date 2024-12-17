@@ -37,8 +37,26 @@ public class Vehicle : Destructible
     {
         if (engineSFX != null)
         {
-            engineSFX.pitch = 1f + engineSFXModifier * NormalizedLinearVelocity;
-            engineSFX.volume = 0.5f + NormalizedLinearVelocity;
+            if (NormalizedLinearVelocity > 0.01f)
+            {
+                // Если звук не воспроизводится, запускаем его
+                if (!engineSFX.isPlaying)
+                {
+                    engineSFX.Play();
+                }
+
+                // Обновляем параметры звука
+                engineSFX.pitch = 1f + engineSFXModifier * NormalizedLinearVelocity;
+                engineSFX.volume = 0.5f + NormalizedLinearVelocity;
+            }
+            else
+            {
+                // Если транспортное средство не движется, останавливаем звук
+                if (engineSFX.isPlaying)
+                {
+                    engineSFX.Stop();
+                }
+            }
         }
     }
 }

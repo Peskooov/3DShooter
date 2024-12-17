@@ -6,6 +6,8 @@ public class CharacterInputController : MonoBehaviour
     [SerializeField] private ThirdPersonCamera targetCamera;
     [SerializeField] private PlayerShooter targetShooter;
 
+    [SerializeField] private SpreadShootRig spreadShootRig;
+
     [SerializeField] private Vector3 aimingOffset;
     [SerializeField] private Vector3 defaultOffset;
 
@@ -45,6 +47,7 @@ public class CharacterInputController : MonoBehaviour
             if (targetCharacterMovement.IsAiming)
             {
                 targetShooter.Shoot();
+                spreadShootRig.Spread();
             }
         }
 
