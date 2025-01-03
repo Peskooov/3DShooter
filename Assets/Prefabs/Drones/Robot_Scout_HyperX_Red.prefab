@@ -91,6 +91,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -156,7 +158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5916576168041042880
 Transform:
   m_ObjectHideFlags: 0
@@ -253,7 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementArea: {fileID: 0}
-  colliderViewer: {fileID: 599941403289157692}
+  colliderViewer: {fileID: 2671118740997830839}
 --- !u!82 &2313909992799251129
 AudioSource:
   m_ObjectHideFlags: 0
@@ -265,6 +267,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 163c7015617000349aea2d286dd80848, type: 3}
+  m_Resource: {fileID: 8300000, guid: 163c7015617000349aea2d286dd80848, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.05
   m_Pitch: 1
@@ -409,6 +412,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -466,6 +471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1267752405110430009}
   - component: {fileID: 599941403289157692}
+  - component: {fileID: 2671118740997830839}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -492,6 +498,23 @@ Transform:
   m_Father: {fileID: 5916576168041042880}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &599941403289157692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6191505570268468653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 865094cd5f463404d8a71a5b89e20f3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewingAngle: 150
+  viewingDistance: 10
+  viewHeight: 0
+  sideViewingAngle: 0
+  timeToDetection: 0
+--- !u!114 &2671118740997830839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -604,6 +627,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1
@@ -784,6 +808,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1
@@ -986,7 +1011,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 199000011072130232, guid: 96730f8640590934eacb6f860058e7f9, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 7ff1ab0b724442843965e2dd0f02e969, type: 2}
     - target: {fileID: 199000011148726650, guid: 96730f8640590934eacb6f860058e7f9, type: 3}

@@ -507,7 +507,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &149686452621076569
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -521,6 +521,7 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -2009,7 +2010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4770053395865036411
 Transform:
   m_ObjectHideFlags: 0
@@ -2142,7 +2143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b05691e5aa5654aba40896a0b074d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aIBehaviour: 2
+  aIBehaviour: 0
   alienSoldier: {fileID: 2282081185467137131}
   characterMovement: {fileID: 2661397239253797352}
   agent: {fileID: 5052396387830834866}
@@ -2188,7 +2189,8 @@ MonoBehaviour:
   viewingAngle: 120
   viewingDistance: 20
   viewHeight: 1.7
-  sideViewingAngle: 180
+  sideViewingAngle: 50
+  timeToDetection: 2
 --- !u!1 &3991160397808656654
 GameObject:
   m_ObjectHideFlags: 0
@@ -3068,6 +3070,8 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

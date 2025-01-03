@@ -30,8 +30,6 @@ public class AIAlienSoldier : MonoBehaviour
     [SerializeField] private float findRange;
     [SerializeField] private int patrolPathNodeIndex = 0;
 
-    public event UnityAction<bool> OnVisibilityChanged;
-
     private NavMeshPath navMeshPath;
     private PatrolPathNode currentPathNode;
 
@@ -39,10 +37,11 @@ public class AIAlienSoldier : MonoBehaviour
     private Transform pursueTarget;
     private Vector3 seekTarget;
     private Vector3 findRandomTarget;
+    private bool isPlayerDetected;
 
     private void Start()
     {
-        potentialTarget = Destructible.FindNearestNonTeamMember(alienSoldier)?.gameObject;
+        potentialTarget = Player.Instance.gameObject;
 
         characterMovement.UpdatePosition = false;
         navMeshPath = new NavMeshPath();
@@ -50,17 +49,24 @@ public class AIAlienSoldier : MonoBehaviour
         StartBehaviour(aIBehaviour);
 
         alienSoldier.OnGetDamage += OnGetDamage;
+        alienSoldier.EventOnDeath.AddListener(OnDeath);
     }
 
     private void OnDestroy()
     {
         alienSoldier.OnGetDamage -= OnGetDamage;
+        alienSoldier.EventOnDeath.RemoveListener(OnDeath);
     }
 
     private void Update()
     {
         SyncAgentAndCharacterMovement();
         UpdateAI();
+    }
+
+    private void OnDeath()
+    {
+        SendPlayerEndPersute();
     }
 
     private void OnGetDamage(Destructible other)
@@ -102,6 +108,7 @@ public class AIAlienSoldier : MonoBehaviour
             if (Vector3.Distance(transform.position, pursueTarget.position) <= aimingDistance)
             {
                 characterMovement.Aiming();
+                agent.isStopped = true;
                 alienSoldier.Fire(pursueTarget.position + new Vector3(0, 1, 0));
             }
             else
@@ -114,6 +121,8 @@ public class AIAlienSoldier : MonoBehaviour
         {
             agent.CalculatePath(seekTarget, navMeshPath);
             agent.SetPath(navMeshPath);
+
+            SendPlayerStartPersute();
 
             if (AgentReachedDestination())
             {
@@ -137,6 +146,8 @@ public class AIAlienSoldier : MonoBehaviour
 
         if (aIBehaviour == AIBehaviour.PatrolRandom)
         {
+            SendPlayerEndPersute();
+
             if (AgentReachedDestination() == true)
             {
                 StartCoroutine(SetBehaviourOnTime(AIBehaviour.Idle, currentPathNode.IdleTime));
@@ -145,6 +156,8 @@ public class AIAlienSoldier : MonoBehaviour
 
         if (aIBehaviour == AIBehaviour.PatrolCircle)
         {
+            SendPlayerEndPersute();
+
             if (AgentReachedDestination() == true)
             {
                 StartCoroutine(SetBehaviourOnTime(AIBehaviour.Idle, currentPathNode.IdleTime));
@@ -158,7 +171,8 @@ public class AIAlienSoldier : MonoBehaviour
 
         if (colliderViewer.IsObjectVisible(potentialTarget) || colliderViewer.IsObjectVisibleFromSide(potentialTarget))
         {
-            OnVisibilityChanged?.Invoke(true);
+            SendPlayerStartPersute();
+
             pursueTarget = potentialTarget.transform;
             ActionAssignTargetAllTeamMember(pursueTarget);
 
@@ -166,8 +180,6 @@ public class AIAlienSoldier : MonoBehaviour
         }
         else
         {
-            OnVisibilityChanged?.Invoke(false);
-
             if (pursueTarget != null)
             {
                 seekTarget = pursueTarget.position;
@@ -288,5 +300,23 @@ public class AIAlienSoldier : MonoBehaviour
         float randomX = Random.Range(center.x - findRange, center.x + findRange);
         float randomZ = Random.Range(center.z - findRange, center.z + findRange);
         return new Vector3(randomX, center.y, randomZ);
+    }
+
+    private void SendPlayerStartPersute()
+    {
+        if (!isPlayerDetected)
+        {
+            Player.Instance.StartPursuet();
+            isPlayerDetected = true;
+        }
+    }
+
+    private void SendPlayerEndPersute()
+    {
+        if (isPlayerDetected)
+        {
+            Player.Instance.EndPursuet();
+            isPlayerDetected = false;
+        }
     }
 }

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3954165063721398055}
   - component: {fileID: 204951693041069253}
   - component: {fileID: 4793460871877520116}
+  - component: {fileID: 7469239849828734260}
   m_Layer: 0
   m_Name: Player Soldier
   m_TagString: Player
@@ -111,7 +112,9 @@ MonoBehaviour:
   targetCharacterMovement: {fileID: 3683754476236210688}
   targetCamera: {fileID: 4911178402446790595}
   targetShooter: {fileID: 9141376139871889140}
+  spreadShootRig: {fileID: 6971749191047895601}
   aimingOffset: {x: 0.8, y: 1.7, z: 0.5}
+  defaultOffset: {x: 0.2, y: 1.5, z: 0}
 --- !u!114 &7129429537694653624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +190,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetActionCollector: {fileID: 3954165063721398055}
+--- !u!114 &7469239849828734260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467056767986101712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581faa095a6f8934f9007631f5b0b5b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doNotDestroyOnLoad: 0
+  uiPlayerNotice: {fileID: 404944446112420241}
 --- !u!1 &475054688265718407
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,15 +312,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -364,7 +383,7 @@ GameObject:
   - component: {fileID: 665158762445033419}
   - component: {fileID: 8877165409659795382}
   - component: {fileID: 8552358659964843497}
-  - component: {fileID: 7286515891513981195}
+  - component: {fileID: 404944446112420241}
   m_Layer: 5
   m_Name: UseHint
   m_TagString: Untagged
@@ -455,7 +474,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7286515891513981195
+--- !u!114 &404944446112420241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -464,13 +483,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 923045294987058764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42577b2d5ab1b6d49b6ef3eb56c385cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 3873ab98521259b4588e948bb4388e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hintType: 1
-  hint: {fileID: 8434365353183174188}
-  activateRadius: 3
-  interactAction: {fileID: 0}
+  hit: {fileID: 8434365353183174188}
 --- !u!1 &1697658024812656246
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,6 +820,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2079,8 +2097,94 @@ MonoBehaviour:
   timeDuration: 0.1
   IsCanStart: 0
   IsCanEnd: 0
-  type: 1
   owner: {fileID: 7781532108895209526}
+  type: 1
+--- !u!1 &6868534479061539977
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4976837242211877067}
+  - component: {fileID: 2775684069374574009}
+  m_Layer: 0
+  m_Name: Action Use Vehicle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4976837242211877067
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868534479061539977}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2903112345718673122}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2775684069374574009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868534479061539977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f482d5df5c9e2845bd290e56ebcef24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventOnStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 923045294987058764}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  eventOnEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 923045294987058764}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  animator: {fileID: 9158468037214219737}
+  actionAnimationName: 
+  timeDuration: 0.7
+  IsCanStart: 0
+  IsCanEnd: 0
+  owner: {fileID: 7781532108895209526}
+  type: 3
+  characterController: {fileID: 6544934394335104960}
+  characterMovement: {fileID: 3683754476236210688}
+  characterInputController: {fileID: 4306857561497233941}
+  visualModel: {fileID: 7405937393336566972}
+  thirdPersonCamera: {fileID: 4911178402446790595}
 --- !u!1 &7058316878579799001
 GameObject:
   m_ObjectHideFlags: 0
@@ -2554,8 +2658,8 @@ MonoBehaviour:
   timeDuration: 0.1
   IsCanStart: 0
   IsCanEnd: 0
-  type: 0
   owner: {fileID: 7781532108895209526}
+  type: 0
 --- !u!1 &7663506151229144201
 GameObject:
   m_ObjectHideFlags: 0
@@ -2815,8 +2919,8 @@ MonoBehaviour:
   timeDuration: 0.1
   IsCanStart: 0
   IsCanEnd: 0
-  type: 2
   owner: {fileID: 7781532108895209526}
+  type: 2
 --- !u!1 &8269813333121959939
 GameObject:
   m_ObjectHideFlags: 0
@@ -2958,6 +3062,7 @@ Transform:
   - {fileID: 7335511223903404163}
   - {fileID: 8117788361157922396}
   - {fileID: 6198378817167735828}
+  - {fileID: 4976837242211877067}
   m_Father: {fileID: 7781532108895209526}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8395361515878323869

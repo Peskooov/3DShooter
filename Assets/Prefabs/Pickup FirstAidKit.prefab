@@ -58,6 +58,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -217,11 +219,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactType: 0
   interactAmount: 1
-  actionProperties:
-    interactTransform: {fileID: 3622239711885907928}
-  eventOnInteract:
+  eventStartInteract:
     m_PersistentCalls:
       m_Calls: []
+  eventEndInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  actionProperties:
+    interactTransform: {fileID: 3622239711885907928}
 --- !u!1001 &4994660968320741961
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -309,6 +314,10 @@ PrefabInstance:
     - target: {fileID: 4976030109173553519, guid: 7889290047881a340a4cf50eb20b1560, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946510675027605709, guid: 7889290047881a340a4cf50eb20b1560, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 7108459203722020769, guid: 7889290047881a340a4cf50eb20b1560, type: 3}
       propertyPath: m_PresetInfoIsWorld
