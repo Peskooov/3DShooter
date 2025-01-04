@@ -15,9 +15,9 @@ MonoBehaviour:
   mode: 0
   projectilePrefab: {fileID: 7636716332717455407, guid: b49bf489416872542a593e6cc5d8f09e, type: 3}
   rateOfFite: 0.1
-  energyForUse: 3
-  energyRegenPerSecond: 2
-  energyAmountToStartFire: 30
+  energyForUse: 1
+  energyRegenPerSecond: 1
+  energyAmountToStartFire: 10
   spreadShootRange: 0.5
   spreadShootDistanceFactor: 0.05
   launchSFX: {fileID: 8300000, guid: 823d5109898ce7b428106a6f5319f140, type: 3}
