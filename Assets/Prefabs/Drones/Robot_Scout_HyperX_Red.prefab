@@ -158,7 +158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5916576168041042880
 Transform:
   m_ObjectHideFlags: 0
@@ -188,10 +188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c96a749db1e2b42be19f48f7be4a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nickname: 
+  nickname: Drone
   isIndestructable: 0
   hitPoints: 100
-  m_TeamId: 0
+  m_TeamId: 1
   EventOnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -223,6 +223,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ScoreValue: 0
+  entityId: 1
   weapons:
   - {fileID: 8707505490946870062}
   - {fileID: 7845151425098704646}
@@ -241,7 +242,7 @@ MonoBehaviour:
   movementSpeed: 2
   rotationLerpFactor: 150
   timePatrolDelay: 5
-  maxStepDistance: {x: 5, y: 0, z: 5}
+  maxStepDistance: {x: 5, y: 1, z: 5}
 --- !u!114 &9027231058766743886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,8 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0468497c74b4b468cfdf6ce1ac16a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementArea: {fileID: 0}
-  colliderViewer: {fileID: 2671118740997830839}
+  colliderViewer: {fileID: 599941403289157692}
 --- !u!82 &2313909992799251129
 AudioSource:
   m_ObjectHideFlags: 0
@@ -471,7 +471,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1267752405110430009}
   - component: {fileID: 599941403289157692}
-  - component: {fileID: 2671118740997830839}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -498,23 +497,6 @@ Transform:
   m_Father: {fileID: 5916576168041042880}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &599941403289157692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6191505570268468653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 865094cd5f463404d8a71a5b89e20f3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewingAngle: 150
-  viewingDistance: 10
-  viewHeight: 0
-  sideViewingAngle: 0
-  timeToDetection: 0
---- !u!114 &2671118740997830839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

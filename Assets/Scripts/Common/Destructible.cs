@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
-public class Destructible : Entity
+public class Destructible : Entity, ISerializableEntity
 {
     [SerializeField] private bool isIndestructable;
 
@@ -164,4 +163,42 @@ public class Destructible : Entity
 
     [SerializeField] private int m_ScoreValue;
     public int ScoreValue => m_ScoreValue;
+
+    // Serialize
+    [System.Serializable]
+    public class State
+    {
+        public Vector3 position;
+        public int _hitPoins;
+
+        public State()
+        {
+        }
+    }
+
+    [SerializeField] private int m_EntityId;
+    public long EntityId => m_EntityId;
+
+    public bool IsSerializable()
+    {
+        return currentHitPoints > 0;
+    }
+
+    public string SerializeState()
+    {
+        State s = new State();
+
+        s.position = transform.position;
+        s._hitPoins = currentHitPoints;
+
+        return JsonUtility.ToJson(s);
+    }
+
+    public void DeserializeState(string state)
+    {
+        State s = JsonUtility.FromJson<State>(state);
+
+        transform.position = s.position;
+        hitPoints = s._hitPoins;
+    }
 }

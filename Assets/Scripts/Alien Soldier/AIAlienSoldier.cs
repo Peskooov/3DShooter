@@ -24,11 +24,12 @@ public class AIAlienSoldier : MonoBehaviour
     [SerializeField] private AlienSoldier alienSoldier;
     [SerializeField] private CharacterMovement characterMovement;
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private PatrolPath patrolPath;
     [SerializeField] private ColliderViewer colliderViewer;
     [SerializeField] private float aimingDistance;
     [SerializeField] private float findRange;
     [SerializeField] private int patrolPathNodeIndex = 0;
+
+    private PatrolPath patrolPath;
 
     private NavMeshPath navMeshPath;
     private PatrolPathNode currentPathNode;
@@ -46,6 +47,7 @@ public class AIAlienSoldier : MonoBehaviour
         characterMovement.UpdatePosition = false;
         navMeshPath = new NavMeshPath();
 
+        FindPatrolPath();
         StartBehaviour(aIBehaviour);
 
         alienSoldier.OnGetDamage += OnGetDamage;
@@ -67,6 +69,28 @@ public class AIAlienSoldier : MonoBehaviour
     private void OnDeath()
     {
         SendPlayerEndPersute();
+    }
+
+    private void FindPotentialTarget()
+    {
+        potentialTarget = Destructible.FindNearestNonTeamMember(alienSoldier)?.gameObject;
+    }
+
+    private void FindPatrolPath()
+    {
+        if (patrolPath == null)
+        {
+            PatrolPath[] paths = FindObjectsOfType<PatrolPath>();
+            float minDistance = float.MaxValue;
+
+            for (int i = 0; i < paths.Length; i++)
+            {
+                if (Vector3.Distance(transform.position, paths[i].transform.position) < minDistance)
+                {
+                    patrolPath = paths[i];
+                }
+            }
+        }
     }
 
     private void OnGetDamage(Destructible other)
@@ -167,7 +191,12 @@ public class AIAlienSoldier : MonoBehaviour
 
     private void ActionUpdateTarget()
     {
-        if (potentialTarget == null) return;
+        if (potentialTarget == null)
+        {
+            FindPotentialTarget();
+
+            if (potentialTarget == null) return;
+        }
 
         if (colliderViewer.IsObjectVisible(potentialTarget) || colliderViewer.IsObjectVisibleFromSide(potentialTarget))
         {

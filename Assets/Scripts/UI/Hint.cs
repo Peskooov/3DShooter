@@ -27,7 +27,7 @@ public class Hint : MonoBehaviour
     {
         hint.transform.LookAt(lookTransform);
 
-        if (Vector3.Distance(transform.position, target.position) < activateRadius)
+        if (Vector3.Distance(transform.position, Player.Instance.transform.position) < activateRadius)
             hint.SetActive(true);
         else
             hint.SetActive(false);

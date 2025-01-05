@@ -4,9 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(Drone))]
 public class DroneAI : MonoBehaviour
 {
-    [SerializeField] private CubeArea movementArea;
     [SerializeField] private ColliderViewer colliderViewer;
 
+    private CubeArea movementArea;
     private Drone drone;
     private Vector3 movementPosition;
     private Transform shootTarget;
@@ -15,6 +15,8 @@ public class DroneAI : MonoBehaviour
     {
         drone = GetComponent<Drone>();
         drone.EventOnDeath.AddListener(OnDroneDeath);
+
+        FindMovementArea();
 
         drone.OnGetDamage += OnGetDamage;
     }
@@ -29,6 +31,23 @@ public class DroneAI : MonoBehaviour
     private void Update()
     {
         UpdateAI();
+    }
+
+    private void FindMovementArea()
+    {
+        if (movementArea == null)
+        {
+            CubeArea[] cubeAreas = FindObjectsOfType<CubeArea>();
+            float minDistance = float.MaxValue;
+
+            for (int i = 0; i < cubeAreas.Length; i++)
+            {
+                if (Vector3.Distance(transform.position, cubeAreas[i].transform.position) < minDistance)
+                {
+                    movementArea = cubeAreas[i];
+                }
+            }
+        }
     }
 
     private void OnGetDamage(Destructible other)

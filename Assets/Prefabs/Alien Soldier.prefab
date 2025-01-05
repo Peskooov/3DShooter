@@ -2010,7 +2010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4770053395865036411
 Transform:
   m_ObjectHideFlags: 0
@@ -2109,7 +2109,7 @@ MonoBehaviour:
   nickname: 
   isIndestructable: 0
   hitPoints: 100
-  m_TeamId: 1
+  m_TeamId: 2
   EventOnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -2129,6 +2129,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ScoreValue: 0
+  entityId: 2
   weapon: {fileID: 3893582033370823915}
   spreadShootRig: {fileID: 5741763433702869268}
 --- !u!114 &2475909592372008391
@@ -2143,7 +2144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b05691e5aa5654aba40896a0b074d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aIBehaviour: 0
+  aIBehaviour: 2
   alienSoldier: {fileID: 2282081185467137131}
   characterMovement: {fileID: 2661397239253797352}
   agent: {fileID: 5052396387830834866}
