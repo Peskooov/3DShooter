@@ -63,6 +63,10 @@ public class Projectile : Entity
             ImpactEffect impact = Instantiate(selectedEffect, pos, Quaternion.LookRotation(normal));
 
             impact.transform.SetParent(col.transform);
+            if (col.GetComponent<Surface>())
+            {
+                impact.GetComponent<ImpactEffect>().UpdateType(col.GetComponent<Surface>().Type);
+            }
         }
 
         Destroy(gameObject);

@@ -2834,6 +2834,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ScoreValue: 0
+  m_EntityId: 0
   maxLinearVelocity: 50
   engineSFX: {fileID: 5730274269847781135}
   engineSFXModifier: 1

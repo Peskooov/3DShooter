@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class CharacterMovement : MonoBehaviour
 {
+    public UnityAction<Vector3> Land;
+
     [SerializeField] private CharacterController characterController;
 
     [Header("Movement")] [SerializeField] private float accelerationRate;
@@ -101,6 +104,11 @@ public class CharacterMovement : MonoBehaviour
 
         if (UpdatePosition)
             characterController.Move(movementDirection * Time.deltaTime);
+
+        if (characterController.isGrounded == true && Mathf.Abs(movementDirection.y) > 2)
+        {
+            Land?.Invoke(movementDirection);
+        }
     }
 
     public void Jump()

@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private Transform firePoint;
 
     [SerializeField] private ParticleSystem muzzleParticleSystem;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private NoiseAudioSource audioSource;
 
     public WeaponMode Mode => mode;
     public float MaxPrimaryEnergy => maxPrimaryEnergy;

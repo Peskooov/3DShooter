@@ -16,20 +16,17 @@ public class SceneSerializer : MonoBehaviour
 
     [SerializeField] private PrefabsDataBase m_PrefabsDataBase;
 
-    private void Update()
+    public void SaveScene()
     {
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            SaveToFile("Test.dat");
-        }
-
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            LoadFromFile("Test.dat");
-        }
+        SaveToFile("Test.dat");
     }
 
-    public void SaveToFile(string filePath)
+    public void LoadScene()
+    {
+        LoadFromFile("Test.dat");
+    }
+
+    private void SaveToFile(string filePath)
     {
         List<SceneObjectState> savedObjects = new List<SceneObjectState>();
 
@@ -67,7 +64,7 @@ public class SceneSerializer : MonoBehaviour
         Debug.Log("Scene saved! Path file: " + Application.persistentDataPath + "/" + filePath);
     }
 
-    public void LoadFromFile(string filePath)
+    private void LoadFromFile(string filePath)
     {
         Player.Instance.Destroy();
 
@@ -93,6 +90,21 @@ public class SceneSerializer : MonoBehaviour
             Debug.LogError("m_PrefabsDataBase is not assigned!");
             return;
         }
+
+        // Заспавниваем игрока
+        foreach (var v in loadedObjects)
+        {
+            if (m_PrefabsDataBase.IsPlayerID(v.entityId))
+            {
+                GameObject p = m_PrefabsDataBase.CreatePlayer();
+
+                p.GetComponent<ISerializableEntity>().DeserializeState(v.state);
+
+                loadedObjects.Remove(v);
+                break;
+            }
+        }
+
 
         // Заспавниваем все объекты
         foreach (var v in loadedObjects)

@@ -2129,9 +2129,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ScoreValue: 0
-  entityId: 2
+  m_EntityId: 2
   weapon: {fileID: 3893582033370823915}
   spreadShootRig: {fileID: 5741763433702869268}
+  aiAlienSoldier: {fileID: 2475909592372008391}
+  hearingDistance: 30
 --- !u!114 &2475909592372008391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2144,11 +2146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b05691e5aa5654aba40896a0b074d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aIBehaviour: 2
+  aIBehaviour: 3
   alienSoldier: {fileID: 2282081185467137131}
   characterMovement: {fileID: 2661397239253797352}
   agent: {fileID: 5052396387830834866}
-  patrolPath: {fileID: 0}
   colliderViewer: {fileID: 4185253952967153187}
   aimingDistance: 6
   findRange: 3

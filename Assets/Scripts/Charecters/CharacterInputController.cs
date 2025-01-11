@@ -13,8 +13,19 @@ public class CharacterInputController : MonoBehaviour
 
     private void Start()
     {
+        LockMouse();
+    }
+
+    public void LockMouse()
+    {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void UnlockMouse()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void Update()

@@ -223,7 +223,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ScoreValue: 0
-  entityId: 1
+  m_EntityId: 1
   weapons:
   - {fileID: 8707505490946870062}
   - {fileID: 7845151425098704646}

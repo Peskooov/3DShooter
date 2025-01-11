@@ -4844,6 +4844,8 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9745,6 +9747,8 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9812,6 +9816,7 @@ GameObject:
   - component: {fileID: 7061491955274734679}
   - component: {fileID: 5644791384565417588}
   - component: {fileID: 1609133337866695727}
+  - component: {fileID: 1694468791597704813}
   m_Layer: 0
   m_Name: Rifle
   m_TagString: Untagged
@@ -9856,7 +9861,7 @@ MonoBehaviour:
   maxPrimaryEnergy: 100
   firePoint: {fileID: 2690761489225966782}
   muzzleParticleSystem: {fileID: 3375207660778888012}
-  audioSource: {fileID: 1609133337866695727}
+  audioSource: {fileID: 1694468791597704813}
 --- !u!82 &1609133337866695727
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9868,6 +9873,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1
@@ -9953,6 +9959,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1694468791597704813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5148304465423465944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cfa3b5b4b612984891d7036c4e35d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5562424156729305983
 GameObject:
   m_ObjectHideFlags: 0
@@ -10034,6 +10052,8 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

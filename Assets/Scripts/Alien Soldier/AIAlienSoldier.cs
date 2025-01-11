@@ -29,6 +29,12 @@ public class AIAlienSoldier : MonoBehaviour
     [SerializeField] private float findRange;
     [SerializeField] private int patrolPathNodeIndex = 0;
 
+    public AIBehaviour Behaviour
+    {
+        get { return aIBehaviour; }
+        set { aIBehaviour = value; }
+    }
+
     private PatrolPath patrolPath;
 
     private NavMeshPath navMeshPath;
@@ -38,10 +44,12 @@ public class AIAlienSoldier : MonoBehaviour
     private Transform pursueTarget;
     private Vector3 seekTarget;
     private Vector3 findRandomTarget;
+    private Vector3 startPos;
     private bool isPlayerDetected;
 
     private void Start()
     {
+        startPos = transform.position;
         potentialTarget = Player.Instance.gameObject;
 
         characterMovement.UpdatePosition = false;
@@ -66,6 +74,19 @@ public class AIAlienSoldier : MonoBehaviour
         UpdateAI();
     }
 
+    public void SetPosition(Vector3 pos)
+    {
+        agent.Warp(pos);
+    }
+
+    public void OnHeard()
+    {
+        SendPlayerStartPersute();
+
+        pursueTarget = potentialTarget.transform;
+        ActionAssignTargetAllTeamMember(pursueTarget);
+    }
+
     private void OnDeath()
     {
         SendPlayerEndPersute();
@@ -73,7 +94,7 @@ public class AIAlienSoldier : MonoBehaviour
 
     private void FindPotentialTarget()
     {
-        potentialTarget = Destructible.FindNearestNonTeamMember(alienSoldier)?.gameObject;
+        potentialTarget = Player.Instance.gameObject;
     }
 
     private void FindPatrolPath()
@@ -347,5 +368,9 @@ public class AIAlienSoldier : MonoBehaviour
             Player.Instance.EndPursuet();
             isPlayerDetected = false;
         }
+    }
+
+    public void Heard(float distance)
+    {
     }
 }

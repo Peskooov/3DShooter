@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PrefabsDataBase : ScriptableObject
 {
+    public Entity PlayerPrefabs;
     public List<Entity> AllPrefabs;
 
     public GameObject CreateEntityFromId(long id)
@@ -19,5 +20,15 @@ public class PrefabsDataBase : ScriptableObject
         }
 
         return null;
+    }
+
+    public bool IsPlayerID(long id)
+    {
+        return id == (PlayerPrefabs as ISerializableEntity).EntityId;
+    }
+
+    public GameObject CreatePlayer()
+    {
+        return Instantiate(PlayerPrefabs.gameObject);
     }
 }

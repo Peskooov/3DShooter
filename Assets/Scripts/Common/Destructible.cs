@@ -20,6 +20,11 @@ public class Destructible : Entity, ISerializableEntity
         currentHitPoints = hitPoints;
     }
 
+    public void SetHitPoint(int hitPoint)
+    {
+        currentHitPoints = Mathf.Clamp(hitPoint, 0, hitPoints);
+    }
+
     public void ApplyDamage(int damage, Destructible other)
     {
         if (isIndestructable || isDeath) return;
@@ -179,12 +184,12 @@ public class Destructible : Entity, ISerializableEntity
     [SerializeField] private int m_EntityId;
     public long EntityId => m_EntityId;
 
-    public bool IsSerializable()
+    public virtual bool IsSerializable()
     {
         return currentHitPoints > 0;
     }
 
-    public string SerializeState()
+    public virtual string SerializeState()
     {
         State s = new State();
 
@@ -194,7 +199,7 @@ public class Destructible : Entity, ISerializableEntity
         return JsonUtility.ToJson(s);
     }
 
-    public void DeserializeState(string state)
+    public virtual void DeserializeState(string state)
     {
         State s = JsonUtility.FromJson<State>(state);
 

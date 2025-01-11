@@ -1,16 +1,32 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
-    public class ImpactEffect : MonoBehaviour
+public enum ImpactType
+{
+    NoDecal,
+    Default
+}
+
+public class ImpactEffect : MonoBehaviour
+{
+    [SerializeField] private float lifeTime;
+    [SerializeField] private GameObject decal;
+
+    private float timer;
+
+    private void Update()
     {
-        [SerializeField] private float lifeTime;
+        if (timer < lifeTime)
+            timer += Time.deltaTime;
+        else
+            Destroy(gameObject);
+    }
 
-        private float timer;
-
-        private void Update()
+    public void UpdateType(ImpactType type)
+    {
+        if (type == ImpactType.NoDecal)
         {
-            if (timer < lifeTime)
-                timer += Time.deltaTime;
-            else
-                Destroy(gameObject);
+            decal.SetActive(false);
         }
     }
+}

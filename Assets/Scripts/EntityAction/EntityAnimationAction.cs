@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EntityAnimationAction : EntityAction
@@ -8,6 +9,12 @@ public class EntityAnimationAction : EntityAction
 
     private Timer timer;
     private bool isPlayingAnimation;
+
+    private void OnDestroy()
+    {
+        if (timer != null)
+            timer.OnTick -= OnTimerTick;
+    }
 
     public override void StartAction()
     {
